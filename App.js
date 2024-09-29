@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EmployeeForm from './components/EmployeeForm';
 import EmployeeList from './components/EmployeeList';
+import ContactPage from './components/ContactPage';
+import HomePage from './components/HomePage';
+import './App.css';
 
 function App() {
-  // Initialize state from local storage
   const [employees, setEmployees] = useState(() => {
     const savedEmployees = localStorage.getItem('employees');
     return savedEmployees ? JSON.parse(savedEmployees) : [];
   });
 
-  // Save employees to local storage when state changes
   useEffect(() => {
     localStorage.setItem('employees', JSON.stringify(employees));
   }, [employees]);
 
-  // Add a new employee to the list
   const addEmployee = (employee) => {
     setEmployees((prevEmployees) => [...prevEmployees, employee]);
   };
 
   return (
-    <div className="App">
-      <h1>Employee List</h1>
-      {/* Employee Form */}
-      <EmployeeForm addEmployee={addEmployee} />
-      {/* Employee List */}
-      <EmployeeList employees={employees} />
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Employee Management</h1>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/employees" element={<EmployeeList employees={employees} />} />
+          <Route path="/add" element={<EmployeeForm addEmployee={addEmployee} />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

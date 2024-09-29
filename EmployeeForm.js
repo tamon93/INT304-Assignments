@@ -1,27 +1,19 @@
 import React, { useState } from 'react';
 
 function EmployeeForm({ addEmployee }) {
-    // Local state for form inputs
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
-    // Handle form submission
     const handleAddEmployee = (e) => {
-        e.preventDefault(); // Prevent page refresh
-
-        // Create a new employee object
+        e.preventDefault();
         const newEmployee = {
-            employeeId: Math.floor(Math.random() * 10000), // Generate random ID
+            employeeId: Math.floor(Math.random() * 10000),
             name,
             email,
             phone,
         };
-
-        // Add the new employee via the parent component's function
         addEmployee(newEmployee);
-
-        // Clear form inputs after submission
         setName('');
         setEmail('');
         setPhone('');
@@ -50,7 +42,7 @@ function EmployeeForm({ addEmployee }) {
                 placeholder="Phone"
                 required
             />
-            <button type="submit">Add Employee</button>
+            <button className="button" type="submit">Add Employee</button>
         </form>
     );
 }
